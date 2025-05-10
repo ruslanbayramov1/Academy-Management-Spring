@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 public class Student {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false, length = 64)
