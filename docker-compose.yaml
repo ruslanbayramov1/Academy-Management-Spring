@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: academy-management-db
+    environment:
+      POSTGRES_USER: academy_user
+      POSTGRES_PASSWORD: academy_password
+      POSTGRES_DB: academy_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - academy_data:/var/lib/postgresql/data
+    networks:
+      - academy_network
+
+volumes:
+  academy_data:
+
+networks:
+  academy_network:
+    driver: bridge
