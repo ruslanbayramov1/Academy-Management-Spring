@@ -1,4 +1,4 @@
-package org.springframework.academymanagement.dto;
+package org.springframework.academymanagement.dto.student;
 
 
 import java.time.LocalDate;

@@ -1,9 +1,9 @@
 package org.springframework.academymanagement.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.academymanagement.dto.StudentCreateDTO;
-import org.springframework.academymanagement.dto.StudentGetDTO;
-import org.springframework.academymanagement.dto.StudentUpdateDTO;
+import org.springframework.academymanagement.dto.student.StudentCreateDTO;
+import org.springframework.academymanagement.dto.student.StudentGetDTO;
+import org.springframework.academymanagement.dto.student.StudentUpdateDTO;
 import org.springframework.academymanagement.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

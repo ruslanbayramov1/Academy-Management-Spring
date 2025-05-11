@@ -1,10 +1,10 @@
-package org.springframework.academymanagement.dto;
+package org.springframework.academymanagement.dto.student;
 
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
-public record StudentUpdateDTO(
+public record StudentCreateDTO(
         @NotBlank String firstName,
         @NotBlank String lastName,
         @NotBlank String email,

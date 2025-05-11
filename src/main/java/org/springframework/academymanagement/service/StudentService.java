@@ -1,8 +1,8 @@
 package org.springframework.academymanagement.service;
 
-import org.springframework.academymanagement.dto.StudentCreateDTO;
-import org.springframework.academymanagement.dto.StudentGetDTO;
-import org.springframework.academymanagement.dto.StudentUpdateDTO;
+import org.springframework.academymanagement.dto.student.StudentCreateDTO;
+import org.springframework.academymanagement.dto.student.StudentGetDTO;
+import org.springframework.academymanagement.dto.student.StudentUpdateDTO;
 import org.springframework.academymanagement.repository.StudentRepository;
 import org.springframework.academymanagement.entity.Student;
 import org.springframework.academymanagement.mapper.StudentMapper;
