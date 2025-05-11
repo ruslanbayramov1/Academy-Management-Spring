@@ -1,6 +1,7 @@
 package org.springframework.academymanagement.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.academymanagement.dto.response.ApiResponse;
 import org.springframework.academymanagement.dto.student.StudentCreateDTO;
 import org.springframework.academymanagement.dto.student.StudentGetDTO;
 import org.springframework.academymanagement.dto.student.StudentUpdateDTO;
@@ -22,24 +23,33 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentGetDTO>> getStudents() {
-        return ResponseEntity.ok(studentService.getAllStudents());
+    public ResponseEntity<ApiResponse<List<StudentGetDTO>>> getStudents() {
+        var response = new ApiResponse<>(true, HttpStatus.OK, "success",studentService.getAllStudents());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{studentId}")
+    public ResponseEntity<ApiResponse<StudentGetDTO>> getStudent(@PathVariable UUID studentId) {
+        var response = new ApiResponse<>(true, HttpStatus.OK, "success",studentService.getStudentById(studentId));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<String> createStudent(@RequestBody @Valid StudentCreateDTO student) {
+    public ResponseEntity<ApiResponse<Void>> createStudent(@RequestBody @Valid StudentCreateDTO student) {
         studentService.createStudent(student);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        var response = new ApiResponse<Void>(true, HttpStatus.CREATED, "created");
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @PutMapping
-    public ResponseEntity<String> updateStudent(@RequestHeader UUID id, @RequestBody @Valid StudentUpdateDTO student) {
+    public ResponseEntity<ApiResponse<Void>> updateStudent(@RequestHeader UUID id, @RequestBody @Valid StudentUpdateDTO student) {
         studentService.updateStudent(id, student);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        var response = new ApiResponse<Void>(true, HttpStatus.CREATED, "updated");
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteStudent(@RequestHeader UUID id) {
+    public ResponseEntity<ApiResponse<Void>> deleteStudent(@RequestHeader UUID id) {
         studentService.deleteStudent(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
