@@ -35,6 +35,7 @@ public class Student {
     @Column(nullable = false, length = 64, unique = true)
     private String studentCode;
 
-    @Column(nullable = false, length = 64, unique = true)
-    private String groupCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id", nullable = false)
+    private Group group;
 }
