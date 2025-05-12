@@ -12,5 +12,5 @@ public record StudentGetDTO(
         LocalDate birthDate,
         String gender,
         String studentCode,
-        String groupCode
+        String groupName
 ) { }

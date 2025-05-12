@@ -1,8 +1,10 @@
 package org.springframework.academymanagement.dto.student;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record StudentCreateDTO(
         @NotBlank String firstName,
@@ -11,6 +13,6 @@ public record StudentCreateDTO(
         LocalDate birthDate,
         @NotBlank String gender,
         @NotBlank String studentCode,
-        @NotBlank String groupCode
+        @NotNull UUID groupId
 ) {
 }

@@ -3,7 +3,9 @@ package org.springframework.academymanagement.service;
 import org.springframework.academymanagement.dto.student.StudentCreateDTO;
 import org.springframework.academymanagement.dto.student.StudentGetDTO;
 import org.springframework.academymanagement.dto.student.StudentUpdateDTO;
+import org.springframework.academymanagement.entity.Group;
 import org.springframework.academymanagement.exception.NotFoundException;
+import org.springframework.academymanagement.repository.GroupRepository;
 import org.springframework.academymanagement.repository.StudentRepository;
 import org.springframework.academymanagement.entity.Student;
 import org.springframework.academymanagement.mapper.StudentMapper;
@@ -17,11 +19,13 @@ import java.util.UUID;
 public class StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final GroupRepository groupRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper, GroupRepository groupRepository) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.groupRepository = groupRepository;
     }
 
     public List<StudentGetDTO> getAllStudents() {
@@ -29,38 +33,34 @@ public class StudentService {
         return students.stream().map(studentMapper::studentToStudentGetDTO).toList();
     }
 
-    public StudentGetDTO findByEmail(String email) {
-        Student student = studentRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Student not found."));
-        return studentMapper.studentToStudentGetDTO(student);
-    }
-
-    public StudentGetDTO findByStudentCode(String studentCode) {
-        Student student = studentRepository.findByStudentCode(studentCode).orElseThrow(() -> new NotFoundException("Student not found."));
-        return studentMapper.studentToStudentGetDTO(student);
-    }
-
-    public StudentGetDTO getStudentById(UUID studentId) {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new NotFoundException("Student not found."));
+    public StudentGetDTO getStudentById(UUID id) {
+        Student student = getStudentEntityById(id);
         return studentMapper.studentToStudentGetDTO(student);
     }
 
     public void createStudent(StudentCreateDTO studentCreateDTO) {
+        Group group = groupRepository.findById(studentCreateDTO.groupId()).orElseThrow(() -> new NotFoundException("Group not found"));
+
         Student student = studentMapper.studentCreateDTOToStudent(studentCreateDTO);
+        student.setGroup(group);
         studentRepository.save(student);
     }
 
     public void updateStudent(UUID id, StudentUpdateDTO studentUpdateDTO) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new NotFoundException("Student not found."));
+        Group group = groupRepository.findById(studentUpdateDTO.groupId()).orElseThrow(() -> new NotFoundException("Group not found"));
+
+        Student student = getStudentEntityById(id);
         studentMapper.updateStudentFromDto(studentUpdateDTO, student);
+        student.setGroup(group);
         studentRepository.save(student);
     }
 
     public void deleteStudent(UUID id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new NotFoundException("Student not found."));
+        Student student = getStudentEntityById(id);
         studentRepository.deleteById(id);
     }
 
-    public Student saveStudent(Student student) {
-        return studentRepository.save(student);
+    private Student getStudentEntityById(UUID id) {
+        return studentRepository.findById(id).orElseThrow(() -> new NotFoundException("Student not found"));
     }
 }
