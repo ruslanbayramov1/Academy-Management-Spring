@@ -1,5 +1,6 @@
 package org.springframework.academymanagement.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.academymanagement.dto.student.StudentCreateDTO;
 import org.springframework.academymanagement.dto.student.StudentGetDTO;
 import org.springframework.academymanagement.dto.student.StudentUpdateDTO;
@@ -9,24 +10,17 @@ import org.springframework.academymanagement.repository.GroupRepository;
 import org.springframework.academymanagement.repository.StudentRepository;
 import org.springframework.academymanagement.entity.Student;
 import org.springframework.academymanagement.mapper.StudentMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final GroupRepository groupRepository;
-
-    @Autowired
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper, GroupRepository groupRepository) {
-        this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
-        this.groupRepository = groupRepository;
-    }
 
     public List<StudentGetDTO> getAllStudents() {
         List<Student> students =  studentRepository.findAll();

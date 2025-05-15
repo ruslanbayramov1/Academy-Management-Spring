@@ -1,5 +1,6 @@
 package org.springframework.academymanagement.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.academymanagement.dto.group.GroupCreateDTO;
 import org.springframework.academymanagement.dto.group.GroupGetDTO;
 import org.springframework.academymanagement.dto.group.GroupUpdateDTO;
@@ -7,22 +8,16 @@ import org.springframework.academymanagement.entity.Group;
 import org.springframework.academymanagement.exception.NotFoundException;
 import org.springframework.academymanagement.mapper.GroupMapper;
 import org.springframework.academymanagement.repository.GroupRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class GroupService {
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
-
-    @Autowired
-    public GroupService(GroupRepository groupRepository, GroupMapper groupMapper) {
-        this.groupRepository = groupRepository;
-        this.groupMapper = groupMapper;
-    }
 
     public List<GroupGetDTO> getAllGroups() {
         List<Group> groups = groupRepository.findAll();
